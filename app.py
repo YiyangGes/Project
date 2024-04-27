@@ -70,7 +70,7 @@ if len(final_df_pr) != 0:
             tooltip = f"$ {row.price}"
         ).add_to(map_a)
 else:
-    result_str = f"Total 0 housing rental are found in  within {option} with price between {values[0]} and {values[1]}"
+    result_str = f"Total 0 housing rental are found within {option} with price between {values[0]} and {values[1]}"
     st.write(result_str)
     map_a = folium.Map(location=(40.7580, -73.9855), zoom_start=12)
 
