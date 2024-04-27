@@ -71,6 +71,7 @@ if len(final_df_pr) != 0:
         ).add_to(map_a)
 else:
     result_str = f"Total 0 housing rental are found in  within {option} with price between {values[0]} and {values[1]}"
+    st.write(result_str)
     map_a = folium.Map(location=(40.7580, -73.9855), zoom_start=12)
 
 folium_static(map_a)
