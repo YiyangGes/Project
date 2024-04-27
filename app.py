@@ -46,17 +46,18 @@ values = st.slider("Select a price range :money_mouth_face:", float(df.price.min
 final_df_pr = filtered_with_nh[(filtered_with_nh['price'] >= values[0]) & (filtered_with_nh['price'] <= values[1])]
 st.dataframe(final_df_pr)
 
-# set neighbourhood str
-if len(st_ms) > 1: # if there is more than one neighbourhood selected, convert the list to a correct sentences
-    neighbourhood_str = ", ".join(st_ms[0:-1]) + ', and '+st_ms[-1]
-else:
-    neighbourhood_str = st_ms[0]
-
-# print the final str
-result_str = f"Total {len(final_df_pr)} housing rental are found in {neighbourhood_str} within {option} with price between {values[0]} and {values[1]}"
-st.write(result_str)
-
 if len(final_df_pr) != 0:
+
+    # set neighbourhood str
+    if len(st_ms) > 1: # if there is more than one neighbourhood selected, convert the list to a correct sentences
+        neighbourhood_str = ", ".join(st_ms[0:-1]) + ', and '+st_ms[-1]
+    else:
+        neighbourhood_str = st_ms[0]
+
+    # print the final str
+    result_str = f"Total {len(final_df_pr)} housing rental are found in {neighbourhood_str} within {option} with price between {values[0]} and {values[1]}"
+    st.write(result_str)
+
     # initialize map with the lat and long
     map_a = folium.Map(location=(final_df_pr.iloc[0]['latitude'],final_df_pr.iloc[0]['longitude']), zoom_start=12)
 
@@ -69,6 +70,7 @@ if len(final_df_pr) != 0:
             tooltip = f"$ {row.price}"
         ).add_to(map_a)
 else:
+    result_str = f"Total 0 housing rental are found in  within {option} with price between {values[0]} and {values[1]}"
     map_a = folium.Map(location=(40.7580, -73.9855), zoom_start=12)
 
 folium_static(map_a)
