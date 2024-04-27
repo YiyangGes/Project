@@ -56,16 +56,19 @@ else:
 result_str = f"Total {len(final_df_pr)} housing rental are found in {neighbourhood_str} within {option} with price between {values[0]} and {values[1]}"
 st.write(result_str)
 
-# initialize map with the lat and long
-map_a = folium.Map(location=(final_df_pr.iloc[0]['latitude'],final_df_pr.iloc[0]['longitude']), zoom_start=12)
+if len(final_df_pr) != 0:
+    # initialize map with the lat and long
+    map_a = folium.Map(location=(final_df_pr.iloc[0]['latitude'],final_df_pr.iloc[0]['longitude']), zoom_start=12)
 
-# loop df, and add in palcemarks
-for row in final_df_pr.itertuples():
-    pop_str = f"Neighborhood: {row.neighbourhood} <br> Host Name: {row.host_name} <br> Room Type: {row.room_type}"
-    folium.Marker(
-        location=(row.latitude,row.longitude),
-        popup=folium.Popup(pop_str, min_width = 150, max_width = 200),
-        tooltip = f"$ {row.price}"
-    ).add_to(map_a)
+    # loop df, and add in palcemarks
+    for row in final_df_pr.itertuples():
+        pop_str = f"Neighborhood: {row.neighbourhood} <br> Host Name: {row.host_name} <br> Room Type: {row.room_type}"
+        folium.Marker(
+            location=(row.latitude,row.longitude),
+            popup=folium.Popup(pop_str, min_width = 150, max_width = 200),
+            tooltip = f"$ {row.price}"
+        ).add_to(map_a)
+else:
+    map_a = folium.Map(location=(40.7580, -73.9855), zoom_start=12)
 
 folium_static(map_a)
